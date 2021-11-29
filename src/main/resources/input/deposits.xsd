@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.feshenko.com/banks"
+  xmlns:tns="http://www.feshenko.com/banks"
+  elementFormDefault="qualified">
+
+  <element name="abstract-deposit" type="tns:abstractDeposit" abstract="true"/>
+
+  <element name="metal-deposit" type="tns:metalDeposit" substitutionGroup="tns:abstract-deposit"/>
+
+  <element name="term-deposit" type="tns:termDeposit" substitutionGroup="tns:abstract-deposit"/>
+
+  <element name="banks">
+    <complexType>
+      <sequence>
+        <element ref="tns:abstract-deposit"
+                 minOccurs="1"
+                 maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+  </element>
+
+  <complexType name="abstractDeposit">
+    <sequence>
+      <element name="country" type="string" minOccurs="0"/>
+      <element name="depositor" type="string" minOccurs="0"/>
+      <element name="amount-on-deposit" type="tns:money"/>
+      <element name="profitability" type="tns:percent"/>
+      <element name="capitalization" type="boolean" default="false"/>
+    </sequence>
+    <attribute name="bank-name" type="string" use="optional"/>
+    <attribute name="account-id" type="tns:depositId" use="required"/>
+  </complexType>
+
+  <complexType name="metalDeposit">
+    <complexContent>
+      <extension base="tns:abstractDeposit">
+        <sequence>
+          <element name="metal" type="tns:metal" minOccurs="0"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="termDeposit">
+    <complexContent>
+      <extension base="tns:abstractDeposit">
+        <sequence>
+          <element name="time-constraints" type="date" minOccurs="0"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+
+  <simpleType name="metal">
+    <restriction base="string">
+      <enumeration value="gold"/>
+      <enumeration value="silver"/>
+      <enumeration value="platinum"/>
+      <enumeration value="palladium"/>
+
+    </restriction>
+  </simpleType>
+
+  <simpleType name="depositId">
+    <restriction base="ID">
+      <pattern value="[a-zA-Z]{2}\d{2}[a-zA-Z]{4}\d{12}"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="money">
+    <restriction base="double">
+      <minInclusive value="0"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="percent">
+    <restriction base="double">
+      <minInclusive value="0"/>
+      <maxInclusive value="1"/>
+    </restriction>
+  </simpleType>
+
+</schema>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<banks xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.feshenko.com/banks"
+       xsi:schemaLocation="http://www.feshenko.com/banks deposits.xsd">
+
+    <metal-deposit bank-name="Альфа-банк" account-id="AB23ewrs313153218543">
+        <country>Belarus</country>
+        <depositor>Фещенко Владимир Дмитриевич</depositor>
+        <amount-on-deposit>333.5</amount-on-deposit>
+        <profitability>0.7</profitability>
+        <capitalization>true</capitalization>
+        <metal>gold</metal>
+    </metal-deposit>
+    <term-deposit bank-name="Альфа-банк" account-id="AB23ewrs313153218533">
+        <country>Belarus</country>
+        <depositor>Фещенко Владимир Дмитриевич</depositor>
+        <amount-on-deposit>333.5</amount-on-deposit>
+        <profitability>1.0</profitability>
+        <capitalization>true</capitalization>
+        <time-constraints>2021-12-23</time-constraints>
+    </term-deposit>
+    <metal-deposit bank-name="Альфа-банк" account-id="AB23ewrs313153211543">
+        <country>Belarus</country>
+        <depositor>Фещенко Владимир Дмитриевич</depositor>
+        <amount-on-deposit>333.5</amount-on-deposit>
+        <profitability>1.0</profitability>
+        <capitalization>true</capitalization>
+        <metal>gold</metal>
+    </metal-deposit>
+    <term-deposit bank-name="Альфа-банк" account-id="AB23ewrs313154218543">
+        <country>Belarus</country>
+        <depositor>Фещенко Владимир Дмитриевич</depositor>
+        <amount-on-deposit>333.5</amount-on-deposit>
+        <profitability>0.8</profitability>
+        <capitalization>true</capitalization>
+        <time-constraints>2021-12-23</time-constraints>
+    </term-deposit>
+</banks>
