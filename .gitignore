@@ -1,5 +1,5 @@
 logs
 .idea
-main
+main/Main.java
 target
 jaxb
