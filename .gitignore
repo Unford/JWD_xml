@@ -1,5 +1,5 @@
 logs
 .idea
-main/Main.java
 target
 jaxb
+/src/main/java/by/epam/xml/main/Main.java
