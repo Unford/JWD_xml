@@ -21,5 +21,5 @@ public abstract class AbstractDepositBuilder {
         return deposits;
     }
 
-    abstract public void buildSetDeposits(String filename)throws DepositXmlException;
+    public abstract void buildSetDeposits(String filename)throws DepositXmlException;
 }
