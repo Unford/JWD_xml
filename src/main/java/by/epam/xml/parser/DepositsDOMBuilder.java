@@ -1,9 +1,6 @@
 package by.epam.xml.parser;
 
-import by.epam.xml.entity.AbstractDeposit;
-import by.epam.xml.entity.Metal;
-import by.epam.xml.entity.MetalDeposit;
-import by.epam.xml.entity.TermDeposit;
+import by.epam.xml.entity.*;
 import by.epam.xml.exception.DepositXmlException;
 import by.epam.xml.tag.DepositXmlTag;
 import by.epam.xml.validator.DepositXmlValidator;
@@ -30,7 +27,6 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
 
     public DepositsDOMBuilder() throws DepositXmlException {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-
         try {
             documentBuilder = builderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
@@ -46,20 +42,21 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
             throw new DepositXmlException("File path is invalid: " + filename);
         }
         try {
+            logger.log(Level.INFO, "DOM started parsing {}", filename);
             Document document = documentBuilder.parse(filename);
             Element root = document.getDocumentElement();
 
-            NodeList metalDepositsList = root.getElementsByTagName(METAL_DEPOSIT.getTag());
+            NodeList metalDepositsList = root.getElementsByTagName(METAL_DEPOSIT.toString());
             addAllDeposits(metalDepositsList);
 
-            NodeList termDepositsList = root.getElementsByTagName(TERM_DEPOSIT.getTag());
+            NodeList termDepositsList = root.getElementsByTagName(TERM_DEPOSIT.toString());
             addAllDeposits(termDepositsList);
 
         } catch (IOException | SAXException e) {
             logger.log(Level.ERROR, "IO or SAX error while reading file", e);
             throw new DepositXmlException("IO or SAX error while reading file", e);
         }
-        logger.log(Level.INFO, "DOM parsing has finished successfully");
+        logger.log(Level.INFO, "DOM parsing {} has finished successfully", filename);
     }
 
     private void addAllDeposits(NodeList depositNodeList) throws DepositXmlException {
@@ -73,55 +70,66 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
     private AbstractDeposit buildDeposit(Element depositElement) throws DepositXmlException {
         AbstractDeposit deposit;
 
-        DepositXmlTag tagName = DepositXmlTag.valueOf(depositElement.getTagName().replace("-","_").toUpperCase());//todo to constants
+        DepositXmlTag depositName = DepositXmlTag.parseDepositXmlTag(depositElement.getTagName());
 
-        switch (tagName){
+        switch (depositName){
             case METAL_DEPOSIT:
-                deposit = new MetalDeposit();
-                Metal tag = Metal.valueOf(
-                        getElementTextContent(depositElement, METAL.getTag())
-                                .toUpperCase());
-                ((MetalDeposit) deposit).setMetal(tag);
+                MetalDeposit metalDeposit = new MetalDeposit();
+
+                Metal metal = Metal.parseMetal(getElementTextContent(depositElement, METAL));
+                metalDeposit.setMetal(metal);
+
+                double mass = Double.parseDouble(getElementTextContent(depositElement, MASS));
+                metalDeposit.setMass(mass);
+
+                deposit = metalDeposit;
                 break;
             case TERM_DEPOSIT:
-                deposit = new TermDeposit();
-                LocalDate date = LocalDate.parse(
-                        getElementTextContent(depositElement, TIME_CONSTRAINTS.getTag()));
-                ((TermDeposit) deposit).setTimeConstraints(date);
+                TermDeposit termDeposit = new TermDeposit();
+
+                Currency currency = Currency.parseCurrency(getElementTextContent(depositElement, CURRENCY));
+                termDeposit.setCurrency(currency);
+
+                double amountOnDeposit = Double.parseDouble(getElementTextContent(depositElement, AMOUNT_ON_DEPOSIT));
+                termDeposit.setAmountOnDeposit(amountOnDeposit);
+
+                double profitability = Double.parseDouble(getElementTextContent(depositElement, PROFITABILITY));
+                termDeposit.setProfitability(profitability);
+
+                boolean capitalization = Boolean.parseBoolean(getElementTextContent(depositElement, CAPITALIZATION));
+                termDeposit.setCapitalization(capitalization);
+
+                LocalDate date = LocalDate.parse(getElementTextContent(depositElement, TIME_CONSTRAINTS));
+                termDeposit.setTimeConstraints(date);
+
+                deposit = termDeposit;
                 break;
             default:
-                throw new DepositXmlException("Can't find this tag name");//todo unreachable
+                throw new DepositXmlException("Can't find this tag name");
         }
+        String accountId = depositElement.getAttribute(ACCOUNT_ID.toString());
+        deposit.setAccountId(accountId);
 
-        deposit.setAccountId(depositElement.getAttribute(ACCOUNT_ID.getTag()));
-        String tmpBankName = depositElement.getAttribute(BANK_NAME.getTag());
+        String bankName = depositElement.getAttribute(BANK_NAME.toString());
+        deposit.setBankName(bankName);
 
-        if (!tmpBankName.isEmpty()){//todo delete??
-            deposit.setBankName(tmpBankName);
-        }
+        String depositor = getElementTextContent(depositElement, DEPOSITOR);
+        deposit.setDepositor(depositor);
 
-        deposit.setDepositor(getElementTextContent(depositElement, DEPOSITOR.getTag()));
-        deposit.setCountry(getElementTextContent(depositElement, COUNTRY.getTag()));
-
-        deposit.setAmountOnDeposit(
-                Double.parseDouble(
-                        getElementTextContent(depositElement, AMOUNT_ON_DEPOSIT.getTag())));
-        deposit.setProfitability(
-                Double.parseDouble(
-                        getElementTextContent(depositElement, PROFITABILITY.getTag())));
-        deposit.setCapitalization(
-                Boolean.parseBoolean(
-                        getElementTextContent(depositElement, CAPITALIZATION.getTag())));
+        Country country = Country.parseCountry(getElementTextContent(depositElement, COUNTRY));
+        deposit.setCountry(country);
 
         return deposit;
     }
 
-    private static String getElementTextContent(Element element, String elementName){
+    private String getElementTextContent(Element element, String elementName){
         NodeList nodeList = element.getElementsByTagName(elementName);
         Node node = nodeList.item(0);
         String text = node.getTextContent();
         return text;
     }
 
-
+    private String getElementTextContent(Element element, DepositXmlTag elementName){
+        return getElementTextContent(element, elementName.toString());
+    }
 }

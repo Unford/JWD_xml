@@ -18,7 +18,7 @@ public abstract class AbstractDepositBuilder {
     }
 
     public Set<AbstractDeposit> getDeposits(){
-        return deposits;
+        return Set.copyOf(deposits);
     }
 
     public abstract void buildSetDeposits(String filename)throws DepositXmlException;

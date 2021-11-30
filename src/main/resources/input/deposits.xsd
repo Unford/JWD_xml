@@ -4,78 +4,112 @@
   xmlns:tns="http://www.feshenko.com/banks"
   elementFormDefault="qualified">
 
-  <element name="abstract-deposit" type="tns:abstractDeposit" abstract="true"/>
+  <element name="abstract-deposit" type="tns:AbstractDeposit" abstract="true"/>
 
-  <element name="metal-deposit" type="tns:metalDeposit" substitutionGroup="tns:abstract-deposit"/>
+  <element name="cash-deposit" type="tns:CashDeposit" substitutionGroup="tns:abstract-deposit" abstract="true"/>
 
-  <element name="term-deposit" type="tns:termDeposit" substitutionGroup="tns:abstract-deposit"/>
+  <element name="metal-deposit" type="tns:MetalDeposit" substitutionGroup="tns:abstract-deposit"/>
+
+  <element name="term-deposit" type="tns:TermDeposit" substitutionGroup="tns:cash-deposit"/>
 
   <element name="banks">
     <complexType>
       <sequence>
         <element ref="tns:abstract-deposit"
-                 minOccurs="1"
                  maxOccurs="unbounded"/>
       </sequence>
     </complexType>
   </element>
 
-  <complexType name="abstractDeposit">
+  <complexType name="AbstractDeposit">
     <sequence>
-      <element name="country" type="string" minOccurs="0"/>
-      <element name="depositor" type="string" minOccurs="0"/>
-      <element name="amount-on-deposit" type="tns:money"/>
-      <element name="profitability" type="tns:percent"/>
-      <element name="capitalization" type="boolean" default="false"/>
+      <element name="country" type="tns:Country"/>
+      <element name="depositor" type="string"/>
     </sequence>
     <attribute name="bank-name" type="string" use="optional"/>
-    <attribute name="account-id" type="tns:depositId" use="required"/>
+    <attribute name="account-id" type="tns:DepositId" use="required"/>
   </complexType>
 
-  <complexType name="metalDeposit">
+  <complexType name="CashDeposit">
     <complexContent>
-      <extension base="tns:abstractDeposit">
+      <extension base="tns:AbstractDeposit">
         <sequence>
-          <element name="metal" type="tns:metal" minOccurs="0"/>
+          <element name="currency" type="tns:Currency"/>
+          <element name="amount-on-deposit" type="tns:PositiveDouble"/>
+          <element name="profitability" type="tns:Percent"/>
+          <element name="capitalization" type="boolean" default="false"/>
         </sequence>
       </extension>
     </complexContent>
   </complexType>
 
-  <complexType name="termDeposit">
+  <complexType name="MetalDeposit">
     <complexContent>
-      <extension base="tns:abstractDeposit">
+      <extension base="tns:AbstractDeposit">
         <sequence>
-          <element name="time-constraints" type="date" minOccurs="0"/>
+          <element name="mass" type="tns:PositiveDouble"/>
+          <element name="metal" type="tns:Metal"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="TermDeposit">
+    <complexContent>
+      <extension base="tns:CashDeposit">
+        <sequence>
+          <element name="time-constraints" type="date"/>
         </sequence>
       </extension>
     </complexContent>
   </complexType>
 
 
-  <simpleType name="metal">
+  <simpleType name="Metal">
     <restriction base="string">
       <enumeration value="gold"/>
       <enumeration value="silver"/>
       <enumeration value="platinum"/>
       <enumeration value="palladium"/>
-
     </restriction>
   </simpleType>
 
-  <simpleType name="depositId">
+  <simpleType name="Currency">
+    <restriction base="string">
+      <enumeration value="USD"/>
+      <enumeration value="EUR"/>
+      <enumeration value="GBP"/>
+      <enumeration value="BYN"/>
+      <enumeration value="RUB"/>
+      <enumeration value="CAD"/>
+      <enumeration value="UAH"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="Country">
+    <restriction base="string">
+      <enumeration value="usa"/>
+      <enumeration value="uk"/>
+      <enumeration value="belarus"/>
+      <enumeration value="russia"/>
+      <enumeration value="canada"/>
+      <enumeration value="ukraine"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="DepositId">
     <restriction base="ID">
       <pattern value="[a-zA-Z]{2}\d{2}[a-zA-Z]{4}\d{12}"/>
     </restriction>
   </simpleType>
 
-  <simpleType name="money">
+  <simpleType name="PositiveDouble">
     <restriction base="double">
       <minInclusive value="0"/>
     </restriction>
   </simpleType>
 
-  <simpleType name="percent">
+  <simpleType name="Percent">
     <restriction base="double">
       <minInclusive value="0"/>
       <maxInclusive value="1"/>

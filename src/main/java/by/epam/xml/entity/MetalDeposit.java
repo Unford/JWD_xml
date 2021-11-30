@@ -2,13 +2,15 @@ package by.epam.xml.entity;
 
 public class MetalDeposit extends AbstractDeposit{
     private Metal metal;
+    private double mass;
 
     public MetalDeposit() {}
 
-    public MetalDeposit(String bankName, String country, String depositor, String accountId,
-                        double amountOnDeposit, double profitability, boolean capitalization, Metal metal) {
-        super(bankName, country, depositor, accountId, amountOnDeposit, profitability, capitalization);
+    public MetalDeposit(String bankName, Country country, String depositor,
+                        String accountId, Metal metal, double mass) {
+        super(bankName, country, depositor, accountId);
         this.metal = metal;
+        this.mass = mass;
     }
 
     public Metal getMetal() {
@@ -19,21 +21,33 @@ public class MetalDeposit extends AbstractDeposit{
         this.metal = metal;
     }
 
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MetalDeposit)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        MetalDeposit that = (MetalDeposit) o;
+        MetalDeposit deposit = (MetalDeposit) o;
 
-        return metal == that.metal;
+        if (Double.compare(deposit.mass, mass) != 0) return false;
+        return metal == deposit.metal;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        long temp;
         result = 31 * result + (metal != null ? metal.hashCode() : 0);
+        temp = Double.doubleToLongBits(mass);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
@@ -41,7 +55,8 @@ public class MetalDeposit extends AbstractDeposit{
     public String toString() {
         final StringBuilder sb = new StringBuilder("Metal deposit:{");
         sb.append(super.toString());
-        sb.append(", metal=").append(metal).append('}');
+        sb.append(", metal='").append(metal).append('\'');
+        sb.append(", mass=").append(mass).append('}');
         return sb.toString();
     }
 }
