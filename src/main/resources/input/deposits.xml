@@ -3,34 +3,105 @@
        xmlns="http://www.feshenko.com/banks"
        xsi:schemaLocation="http://www.feshenko.com/banks deposits.xsd">
 
-    <metal-deposit account-id="AB23ewrs313153218543">
+    <metal-deposit account-id="BY23GDSE313123461543">
         <country>belarus</country>
         <depositor>Фещенко Владимир Дмитриевич</depositor>
         <mass>1.4</mass>
         <metal>gold</metal>
     </metal-deposit>
-    <term-deposit bank-name="Альфа-банк" account-id="AB23ewrs313153218533">
+
+    <term-deposit bank-name="Альфа-банк" account-id="BY13MSJO134137053543">
         <country>russia</country>
-        <depositor>Фещенко Владимир Дмитриевич</depositor>
-        <currency>USD</currency>
-        <amount-on-deposit>333.5</amount-on-deposit>
-        <profitability>1.0</profitability>
-        <capitalization>true</capitalization>
-        <time-constraints>2021-12-23</time-constraints>
+        <depositor>Маковский Петр Николаевич</depositor>
+        <currency>RUB</currency>
+        <amount-on-deposit>1132.5</amount-on-deposit>
+        <profitability>0.40</profitability>
+        <capitalization>false</capitalization>
+        <time-constraints>2022-12-01</time-constraints>
     </term-deposit>
-    <metal-deposit bank-name="Альфа-банк" account-id="AB23ewrs313153211543">
+
+    <metal-deposit bank-name="ВТБ" account-id="US63BGSJ064137153443">
+        <country>usa</country>
+        <depositor>Гумилев Николай Степанович</depositor>
+        <mass>14.2</mass>
+        <metal>palladium</metal>
+    </metal-deposit>
+
+    <term-deposit account-id="UK63ZXCX064537153113">
+        <country>ukraine</country>
+        <depositor>Ахматова Анна Андреевна</depositor>
+        <currency>CAD</currency>
+        <amount-on-deposit>3513.5</amount-on-deposit>
+        <profitability>0.15</profitability>
+        <capitalization>true</capitalization>
+        <time-constraints>2022-05-05</time-constraints>
+    </term-deposit>
+
+    <metal-deposit account-id="AU64GDSE631123631343">
+        <country>russia</country>
+        <depositor>Блок Александр Александрович</depositor>
+        <mass>15.4</mass>
+        <metal>silver</metal>
+    </metal-deposit>
+
+    <term-deposit bank-name="Беларусь-банк" account-id="BY83MBBO136272053543">
         <country>uk</country>
-        <depositor>Фещенко Владимир Дмитриевич</depositor>
-        <mass>4.2</mass>
+        <depositor>Брюсов Валерий Яковлевич</depositor>
+        <currency>RUB</currency>
+        <amount-on-deposit>2532</amount-on-deposit>
+        <profitability>0.20</profitability>
+        <capitalization>true</capitalization>
+        <time-constraints>2025-07-15</time-constraints>
+    </term-deposit>
+
+    <metal-deposit bank-name="Техно-банк" account-id="BY61BGVJ064137933400">
+        <country>belarus</country>
+        <depositor>Бальмонт Константин Дмитриевич</depositor>
+        <mass>39.2</mass>
+        <metal>platinum</metal>
+    </metal-deposit>
+
+    <term-deposit bank-name="Супер-банк" account-id="UJ65NERO561337833141">
+        <country>canada</country>
+        <depositor>Мандельштам Осип Эмильевич</depositor>
+        <currency>GBP</currency>
+        <amount-on-deposit>513.76</amount-on-deposit>
+        <profitability>0.2</profitability>
+        <capitalization>false</capitalization>
+        <time-constraints>2030-12-15</time-constraints>
+    </term-deposit>
+
+    <metal-deposit account-id="DR03MOSE631123634343">
+        <country>uk</country>
+        <depositor>Бунин Иван Алексеевич</depositor>
+        <mass>300</mass>
+        <metal>silver</metal>
+    </metal-deposit>
+
+    <term-deposit bank-name="ВТБ" account-id="RU15YBER104271586343">
+        <country>ukraine</country>
+        <depositor>Введенский Александр Иванович</depositor>
+        <currency>UAH</currency>
+        <amount-on-deposit>753.2</amount-on-deposit>
+        <profitability>0.30</profitability>
+        <capitalization>false</capitalization>
+        <time-constraints>2022-06-12</time-constraints>
+    </term-deposit>
+
+    <metal-deposit bank-name="Альфа-банк" account-id="RU12BHYJ066932933402">
+        <country>russia</country>
+        <depositor>Волошин Максимилиан Александрович</depositor>
+        <mass>14.2</mass>
         <metal>gold</metal>
     </metal-deposit>
-    <term-deposit account-id="AB23ewrs313154218543">
-        <country>usa</country>
-        <depositor>Фещенко Владимир Дмитриевич</depositor>
-        <currency>CAD</currency>
-        <amount-on-deposit>333.5</amount-on-deposit>
-        <profitability>0.8</profitability>
-        <capitalization>true</capitalization>
-        <time-constraints>2021-12-23</time-constraints>
+
+    <term-deposit bank-name="БелВЭБ" account-id="BY31HTOE561330093421">
+        <country>belarus</country>
+        <depositor>Есенин Сергей Александрович</depositor>
+        <currency>BYN</currency>
+        <amount-on-deposit>1290.4</amount-on-deposit>
+        <profitability>0.4</profitability>
+        <capitalization>false</capitalization>
+        <time-constraints>2022-03-16</time-constraints>
     </term-deposit>
 </banks>

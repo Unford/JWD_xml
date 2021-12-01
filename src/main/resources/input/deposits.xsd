@@ -99,19 +99,20 @@
 
   <simpleType name="DepositId">
     <restriction base="ID">
-      <pattern value="[a-zA-Z]{2}\d{2}[a-zA-Z]{4}\d{12}"/>
+      <pattern value="[A-Z]{2}\d{2}[A-Z]{4}\d{12}"/>
     </restriction>
   </simpleType>
 
   <simpleType name="PositiveDouble">
     <restriction base="double">
-      <minInclusive value="0"/>
+      <minExclusive value="0"/>
+      <maxInclusive value="999999"/>
     </restriction>
   </simpleType>
 
   <simpleType name="Percent">
     <restriction base="double">
-      <minInclusive value="0"/>
+      <minExclusive value="0"/>
       <maxInclusive value="1"/>
     </restriction>
   </simpleType>

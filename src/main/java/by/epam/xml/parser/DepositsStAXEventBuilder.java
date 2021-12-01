@@ -19,6 +19,7 @@ import javax.xml.stream.events.XMLEvent;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static by.epam.xml.tag.DepositXmlTag.*;
@@ -38,10 +39,11 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
             throw new DepositXmlException("File path is invalid: " + filename);
         }
         AbstractDeposit deposit = null;
+        FileInputStream inputStream = null;
         try {
             logger.log(Level.INFO, "StAX started parsing {}", filename);
-            XMLEventReader reader = inputFactory.createXMLEventReader(new FileInputStream(filename));
-
+            inputStream = new FileInputStream(filename);
+            XMLEventReader reader = inputFactory.createXMLEventReader(inputStream);
             while (reader.hasNext()){
                 XMLEvent event = reader.nextEvent();
                 if (event.isStartElement()){
@@ -52,27 +54,18 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
                     switch (currentXmlTag){
                         case METAL_DEPOSIT:
                             deposit = new MetalDeposit();
-                            Attribute bankName = startElement.getAttributeByName(QName.valueOf(BANK_NAME.toString()));
-                            if (bankName != null){
-                                deposit.setBankName(bankName.getValue());
-                            }
-                            Attribute accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
-                            deposit.setAccountId(accountId.getValue());
+                            buildDepositAttributes(startElement, deposit);
                             break;
 
                         case TERM_DEPOSIT:
                             deposit = new TermDeposit();
-                            bankName = startElement.getAttributeByName(QName.valueOf(BANK_NAME.toString()));
-                            if (bankName != null){
-                                deposit.setBankName(bankName.getValue());
-                            }
-                            accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
-                            deposit.setAccountId(accountId.getValue());
+                            buildDepositAttributes(startElement, deposit);
                             break;
 
                         case COUNTRY:
                             event = reader.nextEvent();
-                            deposit.setCountry(Country.parseCountry(event.asCharacters().getData()));
+                            Country country = Country.parseCountry(event.asCharacters().getData());
+                            deposit.setCountry(country);
                             break;
 
                         case DEPOSITOR:
@@ -82,37 +75,44 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
 
                         case MASS:
                             event = reader.nextEvent();
-                            ((MetalDeposit) deposit).setMass(Double.parseDouble(event.asCharacters().getData()));
+                            double mass = Double.parseDouble(event.asCharacters().getData());
+                            ((MetalDeposit) deposit).setMass(mass);
                             break;
 
                         case METAL:
                             event = reader.nextEvent();
-                            ((MetalDeposit) deposit).setMetal(Metal.parseMetal(event.asCharacters().getData()));
+                            Metal metal = Metal.parseMetal(event.asCharacters().getData());
+                            ((MetalDeposit) deposit).setMetal(metal);
                             break;
 
                         case CURRENCY:
                             event = reader.nextEvent();
-                            ((TermDeposit) deposit).setCurrency(Currency.parseCurrency(event.asCharacters().getData()));
+                            Currency currency = Currency.parseCurrency(event.asCharacters().getData());
+                            ((TermDeposit) deposit).setCurrency(currency);
                             break;
 
                         case AMOUNT_ON_DEPOSIT:
                             event = reader.nextEvent();
-                            ((TermDeposit) deposit).setAmountOnDeposit(Double.parseDouble(event.asCharacters().getData()));
+                            double amountOnDeposit = Double.parseDouble(event.asCharacters().getData());
+                            ((TermDeposit) deposit).setAmountOnDeposit(amountOnDeposit);
                             break;
 
                         case PROFITABILITY:
                             event = reader.nextEvent();
-                            ((TermDeposit) deposit).setProfitability(Double.parseDouble(event.asCharacters().getData()));
+                            double profitability = Double.parseDouble(event.asCharacters().getData());
+                            ((TermDeposit) deposit).setProfitability(profitability);
                             break;
 
                         case CAPITALIZATION:
                             event = reader.nextEvent();
-                            ((TermDeposit) deposit).setCapitalization(Boolean.parseBoolean(event.asCharacters().getData()));
+                            boolean capitalization = Boolean.parseBoolean(event.asCharacters().getData());
+                            ((TermDeposit) deposit).setCapitalization(capitalization);
                             break;
 
                         case TIME_CONSTRAINTS:
                             event = reader.nextEvent();
-                            ((TermDeposit) deposit).setTimeConstraints(LocalDate.parse(event.asCharacters().getData()));
+                            LocalDate date = LocalDate.parse(event.asCharacters().getData());
+                            ((TermDeposit) deposit).setTimeConstraints(date);
                             break;
                     }
                 }
@@ -126,9 +126,25 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
             }
         } catch (XMLStreamException | FileNotFoundException e) {
             logger.log(Level.ERROR, "There is an error with the underlying XML or File {} not found ", filename, e);
+        }finally {
+            try {
+                if (inputStream != null){
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                logger.log(Level.ERROR, "Impossible to close file", e);
+            }
 
         }
         logger.log(Level.INFO, "StAX parsing {} has finished successfully", filename);
+    }
 
+    private void buildDepositAttributes(StartElement startElement, AbstractDeposit deposit){
+        Attribute bankName = startElement.getAttributeByName(QName.valueOf(BANK_NAME.toString()));
+        if (bankName != null){
+            deposit.setBankName(bankName.getValue());
+        }
+        Attribute accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
+        deposit.setAccountId(accountId.getValue());
     }
 }
