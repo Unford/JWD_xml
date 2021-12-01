@@ -3,7 +3,7 @@
        xmlns="http://www.feshenko.com/banks"
        xsi:schemaLocation="http://www.feshenko.com/banks deposits.xsd">
 
-    <metal-deposit account-id="BY23GDSE313123461543">
+    <metal-deposit account-id="BY23GDSE313123461543" bank-name="Техно-банк">
         <country>belarus</country>
         <depositor>Фещенко Владимир Дмитриевич</depositor>
         <mass>1.4</mass>
@@ -54,14 +54,14 @@
         <time-constraints>2025-07-15</time-constraints>
     </term-deposit>
 
-    <metal-deposit bank-name="Техно-банк" account-id="BY61BGVJ064137933400">
+    <metal-deposit account-id="BY61BGVJ064137933400" bank-name="Техно-банк">
         <country>belarus</country>
         <depositor>Бальмонт Константин Дмитриевич</depositor>
         <mass>39.2</mass>
         <metal>platinum</metal>
     </metal-deposit>
 
-    <term-deposit bank-name="Супер-банк" account-id="UJ65NERO561337833141">
+    <term-deposit  account-id="UJ65NERO561337833141" bank-name="Супер-банк">
         <country>canada</country>
         <depositor>Мандельштам Осип Эмильевич</depositor>
         <currency>GBP</currency>
