@@ -8,10 +8,10 @@ public abstract class CashDeposit extends AbstractDeposit{
 
     public CashDeposit() { }
 
-    public CashDeposit(String bankName, Country country, String depositor, String accountId,
+    public CashDeposit(String accountId, String bankName, Country country, String depositor,
                        Currency currency, double amountOnDeposit, double profitability,
                        boolean capitalization) {
-        super(bankName, country, depositor, accountId);
+        super(accountId, bankName, country, depositor);
         this.currency = currency;
         this.amountOnDeposit = amountOnDeposit;
         this.profitability = profitability;

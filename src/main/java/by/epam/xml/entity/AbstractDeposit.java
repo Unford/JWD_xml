@@ -1,14 +1,14 @@
 package by.epam.xml.entity;
 
 public class AbstractDeposit {
+    private String accountId;
     private String bankName;
     private Country country;
     private String depositor;
-    private String accountId;
 
     public AbstractDeposit() {}
 
-    public AbstractDeposit(String bankName, Country country, String depositor, String accountId) {
+    public AbstractDeposit(String accountId, String bankName, Country country, String depositor) {
         this.accountId = accountId;
         this.bankName = bankName;
         this.country = country;

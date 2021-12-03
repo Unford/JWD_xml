@@ -106,7 +106,6 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
                             ((TermDeposit) deposit).setTimeConstraints(date);
                         }
                     }
-
                 }
                 if (event.isEndElement()){
                     EndElement endElement = event.asEndElement();
@@ -130,6 +129,4 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
         Attribute accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
         deposit.setAccountId(accountId.getValue());
     }
-
-
 }

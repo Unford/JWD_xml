@@ -6,9 +6,9 @@ public class MetalDeposit extends AbstractDeposit{
 
     public MetalDeposit() {}
 
-    public MetalDeposit(String bankName, Country country, String depositor,
-                        String accountId, Metal metal, double mass) {
-        super(bankName, country, depositor, accountId);
+    public MetalDeposit(String accountId, String bankName, Country country,
+                        String depositor, Metal metal, double mass) {
+        super(accountId, bankName, country, depositor);
         this.metal = metal;
         this.mass = mass;
     }

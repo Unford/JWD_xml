@@ -7,10 +7,10 @@ public class TermDeposit extends CashDeposit{
 
     public TermDeposit() {}
 
-    public TermDeposit(String bankName, Country country, String depositor, String accountId,
+    public TermDeposit(String accountId, String bankName, Country country, String depositor,
                        Currency currency, double amountOnDeposit, double profitability,
                        boolean capitalization, LocalDate timeConstraints) {
-        super(bankName, country, depositor, accountId, currency, amountOnDeposit, profitability, capitalization);
+        super(accountId, bankName, country, depositor, currency, amountOnDeposit, profitability, capitalization);
         this.timeConstraints = timeConstraints;
     }
 
