@@ -4,6 +4,7 @@ import by.epam.xml.exception.DepositXmlException;
 import by.epam.xml.handler.DepositErrorHandler;
 import by.epam.xml.handler.DepositHandler;
 import by.epam.xml.validator.DepositXmlValidator;
+import by.epam.xml.validator.impl.DepositXmlValidatorImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,11 +40,10 @@ public class DepositsSAXBuilder extends AbstractDepositBuilder{
 
     @Override
     public void buildSetDeposits(String filename)throws DepositXmlException {
-        DepositXmlValidator validator = new DepositXmlValidator();
+        DepositXmlValidator validator = DepositXmlValidatorImpl.getInstance();
         if (!validator.isValidFilepath(filename)){
             throw new DepositXmlException("File path is invalid: " + filename);
         }
-
         try {
             logger.log(Level.INFO, "SAX started parsing {}", filename);
             reader.parse(filename);

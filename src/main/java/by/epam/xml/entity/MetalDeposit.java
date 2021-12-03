@@ -56,7 +56,7 @@ public class MetalDeposit extends AbstractDeposit{
         final StringBuilder sb = new StringBuilder("Metal deposit:{");
         sb.append(super.toString());
         sb.append(", metal='").append(metal).append('\'');
-        sb.append(", mass=").append(mass).append('}');
+        sb.append(", mass=").append(mass).append("}\n");
         return sb.toString();
     }
 }

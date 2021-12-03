@@ -4,6 +4,7 @@ import by.epam.xml.entity.*;
 import by.epam.xml.exception.DepositXmlException;
 import by.epam.xml.tag.DepositXmlTag;
 import by.epam.xml.validator.DepositXmlValidator;
+import by.epam.xml.validator.impl.DepositXmlValidatorImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +19,6 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -34,87 +34,79 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
 
     @Override
     public void buildSetDeposits(String filename)throws DepositXmlException {
-        DepositXmlValidator validator = new DepositXmlValidator();
+        DepositXmlValidator validator = DepositXmlValidatorImpl.getInstance();
         if (!validator.isValidFilepath(filename)){
             throw new DepositXmlException("File path is invalid: " + filename);
         }
         AbstractDeposit deposit = null;
-        FileInputStream inputStream = null;
-        try {
+        try (FileInputStream inputStream = new FileInputStream(filename)){
+
             logger.log(Level.INFO, "StAX started parsing {}", filename);
-            inputStream = new FileInputStream(filename);
             XMLEventReader reader = inputFactory.createXMLEventReader(inputStream);
+
             while (reader.hasNext()){
                 XMLEvent event = reader.nextEvent();
+
                 if (event.isStartElement()){
                     StartElement startElement = event.asStartElement();
                     String textElement = startElement.getName().getLocalPart();
                     DepositXmlTag currentXmlTag = DepositXmlTag.parseDepositXmlTag(textElement);
 
-                    switch (currentXmlTag){
-                        case METAL_DEPOSIT:
+                    switch (currentXmlTag) {
+                        case METAL_DEPOSIT -> {
                             deposit = new MetalDeposit();
                             buildDepositAttributes(startElement, deposit);
-                            break;
-
-                        case TERM_DEPOSIT:
+                        }
+                        case TERM_DEPOSIT -> {
                             deposit = new TermDeposit();
                             buildDepositAttributes(startElement, deposit);
-                            break;
-
-                        case COUNTRY:
+                        }
+                        case COUNTRY -> {
                             event = reader.nextEvent();
                             Country country = Country.parseCountry(event.asCharacters().getData());
                             deposit.setCountry(country);
-                            break;
-
-                        case DEPOSITOR:
+                        }
+                        case DEPOSITOR -> {
                             event = reader.nextEvent();
                             deposit.setDepositor(event.asCharacters().getData());
-                            break;
-
-                        case MASS:
+                        }
+                        case MASS -> {
                             event = reader.nextEvent();
                             double mass = Double.parseDouble(event.asCharacters().getData());
                             ((MetalDeposit) deposit).setMass(mass);
-                            break;
-
-                        case METAL:
+                        }
+                        case METAL -> {
                             event = reader.nextEvent();
                             Metal metal = Metal.parseMetal(event.asCharacters().getData());
                             ((MetalDeposit) deposit).setMetal(metal);
-                            break;
-
-                        case CURRENCY:
+                        }
+                        case CURRENCY -> {
                             event = reader.nextEvent();
                             Currency currency = Currency.parseCurrency(event.asCharacters().getData());
                             ((TermDeposit) deposit).setCurrency(currency);
-                            break;
-
-                        case AMOUNT_ON_DEPOSIT:
+                        }
+                        case AMOUNT_ON_DEPOSIT -> {
                             event = reader.nextEvent();
                             double amountOnDeposit = Double.parseDouble(event.asCharacters().getData());
                             ((TermDeposit) deposit).setAmountOnDeposit(amountOnDeposit);
-                            break;
-
-                        case PROFITABILITY:
+                        }
+                        case PROFITABILITY -> {
                             event = reader.nextEvent();
                             double profitability = Double.parseDouble(event.asCharacters().getData());
                             ((TermDeposit) deposit).setProfitability(profitability);
-                            break;
-
-                        case CAPITALIZATION:
+                        }
+                        case CAPITALIZATION -> {
                             event = reader.nextEvent();
                             boolean capitalization = Boolean.parseBoolean(event.asCharacters().getData());
                             ((TermDeposit) deposit).setCapitalization(capitalization);
-                            break;
-
-                        case TIME_CONSTRAINTS:
+                        }
+                        case TIME_CONSTRAINTS -> {
                             event = reader.nextEvent();
                             LocalDate date = LocalDate.parse(event.asCharacters().getData());
                             ((TermDeposit) deposit).setTimeConstraints(date);
-                            break;
+                        }
                     }
+
                 }
                 if (event.isEndElement()){
                     EndElement endElement = event.asEndElement();
@@ -124,17 +116,8 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
                     }
                 }
             }
-        } catch (XMLStreamException | FileNotFoundException e) {
-            logger.log(Level.ERROR, "There is an error with the underlying XML or File {} not found ", filename, e);
-        }finally {
-            try {
-                if (inputStream != null){
-                    inputStream.close();
-                }
-            } catch (IOException e) {
-                logger.log(Level.ERROR, "Impossible to close file", e);
-            }
-
+        } catch (XMLStreamException | IOException e) {
+            logger.log(Level.ERROR, "There is an error with the underlying XML or IO error {}", filename, e);
         }
         logger.log(Level.INFO, "StAX parsing {} has finished successfully", filename);
     }
@@ -147,4 +130,6 @@ public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
         Attribute accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
         deposit.setAccountId(accountId.getValue());
     }
+
+
 }

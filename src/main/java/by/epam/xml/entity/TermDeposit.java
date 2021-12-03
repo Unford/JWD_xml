@@ -44,7 +44,7 @@ public class TermDeposit extends CashDeposit{
     public String toString() {
         final StringBuilder sb = new StringBuilder("Term deposit:{");
         sb.append(super.toString());
-        sb.append(", timeConstraints=").append(timeConstraints).append('}');
+        sb.append(", timeConstraints=").append(timeConstraints).append("}\n");
         return sb.toString();
     }
 }

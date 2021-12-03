@@ -4,6 +4,7 @@ import by.epam.xml.entity.*;
 import by.epam.xml.exception.DepositXmlException;
 import by.epam.xml.tag.DepositXmlTag;
 import by.epam.xml.validator.DepositXmlValidator;
+import by.epam.xml.validator.impl.DepositXmlValidatorImpl;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +38,7 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
 
     @Override
     public void buildSetDeposits(String filename)throws DepositXmlException{
-        DepositXmlValidator validator = new DepositXmlValidator();
+        DepositXmlValidator validator = DepositXmlValidatorImpl.getInstance();
         if (!validator.isValidFilepath(filename)){
             throw new DepositXmlException("File path is invalid: " + filename);
         }
@@ -74,35 +75,10 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
 
         switch (depositName){
             case METAL_DEPOSIT:
-                MetalDeposit metalDeposit = new MetalDeposit();
-
-                Metal metal = Metal.parseMetal(getElementTextContent(depositElement, METAL));
-                metalDeposit.setMetal(metal);
-
-                double mass = Double.parseDouble(getElementTextContent(depositElement, MASS));
-                metalDeposit.setMass(mass);
-
-                deposit = metalDeposit;
+                deposit = createMetalDeposit(depositElement);
                 break;
             case TERM_DEPOSIT:
-                TermDeposit termDeposit = new TermDeposit();
-
-                Currency currency = Currency.parseCurrency(getElementTextContent(depositElement, CURRENCY));
-                termDeposit.setCurrency(currency);
-
-                double amountOnDeposit = Double.parseDouble(getElementTextContent(depositElement, AMOUNT_ON_DEPOSIT));
-                termDeposit.setAmountOnDeposit(amountOnDeposit);
-
-                double profitability = Double.parseDouble(getElementTextContent(depositElement, PROFITABILITY));
-                termDeposit.setProfitability(profitability);
-
-                boolean capitalization = Boolean.parseBoolean(getElementTextContent(depositElement, CAPITALIZATION));
-                termDeposit.setCapitalization(capitalization);
-
-                LocalDate date = LocalDate.parse(getElementTextContent(depositElement, TIME_CONSTRAINTS));
-                termDeposit.setTimeConstraints(date);
-
-                deposit = termDeposit;
+                deposit = createTermDeposit(depositElement);
                 break;
             default:
                 throw new DepositXmlException("Can't find this tag name");
@@ -120,6 +96,39 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
         deposit.setCountry(country);
 
         return deposit;
+    }
+
+    private AbstractDeposit createMetalDeposit(Element depositElement){
+        MetalDeposit metalDeposit = new MetalDeposit();
+
+        Metal metal = Metal.parseMetal(getElementTextContent(depositElement, METAL));
+        metalDeposit.setMetal(metal);
+
+        double mass = Double.parseDouble(getElementTextContent(depositElement, MASS));
+        metalDeposit.setMass(mass);
+
+        return metalDeposit;
+    }
+
+    private AbstractDeposit createTermDeposit(Element depositElement){
+        TermDeposit termDeposit = new TermDeposit();
+
+        Currency currency = Currency.parseCurrency(getElementTextContent(depositElement, CURRENCY));
+        termDeposit.setCurrency(currency);
+
+        double amountOnDeposit = Double.parseDouble(getElementTextContent(depositElement, AMOUNT_ON_DEPOSIT));
+        termDeposit.setAmountOnDeposit(amountOnDeposit);
+
+        double profitability = Double.parseDouble(getElementTextContent(depositElement, PROFITABILITY));
+        termDeposit.setProfitability(profitability);
+
+        boolean capitalization = Boolean.parseBoolean(getElementTextContent(depositElement, CAPITALIZATION));
+        termDeposit.setCapitalization(capitalization);
+
+        LocalDate date = LocalDate.parse(getElementTextContent(depositElement, TIME_CONSTRAINTS));
+        termDeposit.setTimeConstraints(date);
+
+        return termDeposit;
     }
 
     private String getElementTextContent(Element element, String elementName){

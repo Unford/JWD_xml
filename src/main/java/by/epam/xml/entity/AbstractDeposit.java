@@ -9,10 +9,10 @@ public class AbstractDeposit {
     public AbstractDeposit() {}
 
     public AbstractDeposit(String bankName, Country country, String depositor, String accountId) {
+        this.accountId = accountId;
         this.bankName = bankName;
         this.country = country;
         this.depositor = depositor;
-        this.accountId = accountId;
     }
 
     public String getBankName() {
