@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<banks xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.feshenko.com/banks"
+       xsi:schemaLocation="http://www.feshenko.com/banks deposits.xsd">
+
+    <metal-deposit account-id="BY23GDSE313123461543" bank-name="Техно-банк">
+        <country>belarus</country>
+        <depositor>Фещенко Владимир Дмитриевич</depositor>
+        <mass>1.4</mass>
+        <metal>gold</metal>
+    </metal-deposit>
+
+    <term-deposit bank-name="Альфа-банк" account-id="BY13MSJO134137053543">
+        <country>russia</country>
+        <depositor>Маковский Петр Николаевич</depositor>
+        <currency>RUB</currency>
+        <amount-on-deposit>1132.5</amount-on-deposit>
+        <profitability>0.40</profitability>
+        <capitalization>false</capitalization>
+        <time-constraints>2022-12-01</time-constraints>
+    </term-deposit>
+
+    <metal-deposit  account-id="US63BGSJ064137153443">
+        <country>usa</country>
+        <depositor>Гумилев Николай Степанович</depositor>
+        <mass>14.2</mass>
+        <metal>palladium</metal>
+    </metal-deposit>
+
+    
+</banks>

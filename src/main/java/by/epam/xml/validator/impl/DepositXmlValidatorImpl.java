@@ -47,6 +47,7 @@ public class DepositXmlValidatorImpl implements DepositXmlValidator {
             String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
             SchemaFactory factory = SchemaFactory.newInstance(language);
             File schemaLocation = new File(schemaFilepath);
+
             try {
                 Schema schema = factory.newSchema(schemaLocation);
                 Validator validator = schema.newValidator();
@@ -54,6 +55,7 @@ public class DepositXmlValidatorImpl implements DepositXmlValidator {
                 validator.setErrorHandler(new DepositErrorHandler());
                 validator.validate(source);
                 isValid = true;
+
                 logger.log(Level.INFO, "File - {} is valid, xsd file - {}", filepath, schemaFilepath);
             } catch (SAXException | IOException e) {
                 logger.log(Level.ERROR, "Xml - {} or xsd file - {} invalid", filepath, schemaFilepath);

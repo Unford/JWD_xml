@@ -3,7 +3,7 @@
        xmlns="http://www.feshenko.com/banks"
        xsi:schemaLocation="http://www.feshenko.com/banks deposits.xsd">
 
-    <metal-deposit account-id="BY23GDSE313123461543" bank-name="Техно-банк">
+    <metal-deposit account-id="BY234GDSE313123461543" bank-name="Техно-банк">
         <country>belarus</country>
         <depositor>Фещенко Владимир Дмитриевич</depositor>
         <mass>1.4</mass>
@@ -20,7 +20,7 @@
         <time-constraints>2022-12-01</time-constraints>
     </term-deposit>
 
-    <metal-deposit bank-name="ВТБ" account-id="US63BGSJ064137153443">
+    <metal-deposit bank-name="ВТБ" account-id="US643BGSJ064137153443">
         <country>usa</country>
         <depositor>Гумилев Николай Степанович</depositor>
         <mass>14.2</mass>
@@ -32,7 +32,7 @@
         <depositor>Ахматова Анна Андреевна</depositor>
         <currency>CAD</currency>
         <amount-on-deposit>3513.5</amount-on-deposit>
-        <profitability>0.15</profitability>
+        <orice>0.15</profitability>
         <capitalization>true</capitalization>
         <time-constraints>2022-05-05</time-constraints>
     </term-deposit>
@@ -103,39 +103,5 @@
         <profitability>0.4</profitability>
         <capitalization>false</capitalization>
         <time-constraints>2022-03-16</time-constraints>
-    </term-deposit>
-
-    <metal-deposit account-id="NH41MJHY631123023343">
-        <country>usa</country>
-        <depositor>Мережковский Дмитрий Сергеевич</depositor>
-        <mass>120.5</mass>
-        <metal>gold</metal>
-    </metal-deposit>
-
-    <term-deposit account-id="XY11TSCH732571587421">
-        <country>russia</country>
-        <depositor>Одоевцева Ираида Владимировна</depositor>
-        <currency>EUR</currency>
-        <amount-on-deposit>7323.2</amount-on-deposit>
-        <profitability>0.05</profitability>
-        <capitalization>true</capitalization>
-        <time-constraints>2025-02-22</time-constraints>
-    </term-deposit>
-
-    <metal-deposit account-id="LI51BTYV646532955192">
-        <country>belarus</country>
-        <depositor>Сологуб Федор Кузьмич</depositor>
-        <mass>24.5</mass>
-        <metal>platinum</metal>
-    </metal-deposit>
-
-    <term-deposit bank-name="БСБ>" account-id="TY21EBBY162135308729">
-        <country>uk</country>
-        <depositor>Цветаева Марина Ивановна</depositor>
-        <currency>GBP</currency>
-        <amount-on-deposit>5290.4</amount-on-deposit>
-        <profitability>0.03</profitability>
-        <capitalization>true</capitalization>
-        <time-constraints>2027-10-26</time-constraints>
     </term-deposit>
 </banks>
