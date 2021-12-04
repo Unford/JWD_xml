@@ -24,7 +24,7 @@ import java.time.LocalDate;
 
 import static by.epam.xml.tag.DepositXmlTag.*;
 
-public class DepositsStAXEventBuilder extends AbstractDepositBuilder{
+public class DepositsStAXEventBuilder extends AbstractDepositsBuilder {
     static Logger logger = LogManager.getLogger();
     private XMLInputFactory inputFactory;
 

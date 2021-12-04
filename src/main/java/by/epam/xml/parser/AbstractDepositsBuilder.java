@@ -8,14 +8,14 @@ import by.epam.xml.validator.impl.DepositXmlValidatorImpl;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class AbstractDepositBuilder {
+public abstract class AbstractDepositsBuilder {
     protected Set<AbstractDeposit> deposits;
 
-    public AbstractDepositBuilder(){
+    public AbstractDepositsBuilder(){
         this.deposits = new HashSet<>();
     }
 
-    public AbstractDepositBuilder(Set<AbstractDeposit> deposits){
+    public AbstractDepositsBuilder(Set<AbstractDeposit> deposits){
         this.deposits = deposits;
     }
 

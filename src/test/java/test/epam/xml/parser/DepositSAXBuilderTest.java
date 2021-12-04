@@ -2,8 +2,8 @@ package test.epam.xml.parser;
 
 import by.epam.xml.entity.*;
 import by.epam.xml.exception.DepositXmlException;
-import by.epam.xml.parser.AbstractDepositBuilder;
-import by.epam.xml.parser.DepositBuilderFactory;
+import by.epam.xml.parser.AbstractDepositsBuilder;
+import by.epam.xml.parser.DepositsBuilderFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,11 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DepositSAXBuilderTest {
     private final static String SCHEMA = "input/deposits.xsd";
-    private AbstractDepositBuilder depositBuilder;
+    private AbstractDepositsBuilder depositBuilder;
 
 
     public DepositSAXBuilderTest() throws DepositXmlException {
-        depositBuilder = DepositBuilderFactory.createDepositBuilder("Sax");
+        depositBuilder = DepositsBuilderFactory.createDepositBuilder("Sax");
     }
 
     @Test(description = "Parsing valid xml by SAX",

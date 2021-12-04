@@ -16,7 +16,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 
-public class DepositsSAXBuilder extends AbstractDepositBuilder{
+public class DepositsSAXBuilder extends AbstractDepositsBuilder {
     static Logger logger = LogManager.getLogger();
     private DepositHandler handler;
     private XMLReader reader;

@@ -22,7 +22,7 @@ import java.time.LocalDate;
 
 import static by.epam.xml.tag.DepositXmlTag.*;
 
-public class DepositsDOMBuilder extends AbstractDepositBuilder{
+public class DepositsDOMBuilder extends AbstractDepositsBuilder {
     static Logger logger = LogManager.getLogger();
     private DocumentBuilder documentBuilder;
 
