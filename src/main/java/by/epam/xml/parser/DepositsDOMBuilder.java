@@ -54,8 +54,8 @@ public class DepositsDOMBuilder extends AbstractDepositBuilder{
             addAllDeposits(termDepositsList);
 
         } catch (IOException | SAXException e) {
-            logger.log(Level.ERROR, "IO or SAX error while reading file", e);
-            throw new DepositXmlException("IO or SAX error while reading file", e);
+            logger.log(Level.ERROR, "IO or SAX error while reading file {}", filename, e);
+            throw new DepositXmlException("IO or SAX error while reading file " + filename, e);
         }
         logger.log(Level.INFO, "DOM parsing {} has finished successfully", filename);
     }

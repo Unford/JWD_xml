@@ -43,7 +43,9 @@ public class DepositXmlValidatorImpl implements DepositXmlValidator {
     @Override
     public boolean isValidXmlFile(String filepath, String schemaFilepath){
         boolean isValid = false;
+
         if (isValidFilepath(filepath) && isValidFilepath(schemaFilepath)){
+
             String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
             SchemaFactory factory = SchemaFactory.newInstance(language);
             File schemaLocation = new File(schemaFilepath);
@@ -58,7 +60,7 @@ public class DepositXmlValidatorImpl implements DepositXmlValidator {
 
                 logger.log(Level.INFO, "File - {} is valid, xsd file - {}", filepath, schemaFilepath);
             } catch (SAXException | IOException e) {
-                logger.log(Level.ERROR, "Xml - {} or xsd file - {} invalid", filepath, schemaFilepath);
+                logger.log(Level.ERROR, "Xml - {} or xsd file - {} invalid", filepath, schemaFilepath, e);
             }
         }
         return isValid;

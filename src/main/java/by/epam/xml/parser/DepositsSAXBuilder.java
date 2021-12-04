@@ -48,8 +48,8 @@ public class DepositsSAXBuilder extends AbstractDepositBuilder{
             logger.log(Level.INFO, "SAX started parsing {}", filename);
             reader.parse(filename);
         } catch (IOException | SAXException e) {
-            logger.log(Level.ERROR, "Any SAX or IO exception from the parser", e);
-            throw new DepositXmlException("Any SAX or IO exception from the parser", e);
+            logger.log(Level.ERROR, "Any SAX or IO exception from the parser {}", filename, e);
+            throw new DepositXmlException("Any SAX or IO exception from the parser "+ filename, e);
         }
         deposits = handler.getDeposits();
         logger.log(Level.INFO, "SAX parsing {} has finished successfully", filename);

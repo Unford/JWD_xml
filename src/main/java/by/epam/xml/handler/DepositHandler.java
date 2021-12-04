@@ -36,8 +36,12 @@ public class DepositHandler extends DefaultHandler {
                 case METAL_DEPOSIT -> currentDeposit = new MetalDeposit();
             }
             currentXmlTag = null;
-            currentDeposit.setAccountId(attributes.getValue(ACCOUNT_ID.toString()));
-            currentDeposit.setBankName(attributes.getValue(BANK_NAME.toString()));
+
+            String accountId = attributes.getValue(ACCOUNT_ID.toString());
+            currentDeposit.setAccountId(accountId);
+
+            String bankName = attributes.getValue(BANK_NAME.toString());
+            currentDeposit.setBankName(bankName);
         }else {
             DepositXmlTag temp = DepositXmlTag.parseDepositXmlTag(qName);
             if (withText.contains(temp)){
