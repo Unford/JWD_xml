@@ -27,9 +27,11 @@ public abstract class AbstractDepositsBuilder {
 
     public void buildSetDeposits(String filename, String schema)throws DepositXmlException {
         DepositXmlValidator validator = DepositXmlValidatorImpl.getInstance();
+
         if (!validator.isValidXmlFile(filename, schema)){
             throw new DepositXmlException("Xml file is invalid: " + filename);
         }
+
         buildSetDeposits(filename);
     }
 

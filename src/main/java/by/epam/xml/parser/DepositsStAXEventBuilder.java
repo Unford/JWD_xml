@@ -35,9 +35,11 @@ public class DepositsStAXEventBuilder extends AbstractDepositsBuilder {
     @Override
     public void buildSetDeposits(String filename)throws DepositXmlException {
         DepositXmlValidator validator = DepositXmlValidatorImpl.getInstance();
+
         if (!validator.isValidFilepath(filename)){
             throw new DepositXmlException("File path is invalid: " + filename);
         }
+
         AbstractDeposit deposit = null;
         try (FileInputStream inputStream = new FileInputStream(filename)){
 
@@ -126,6 +128,7 @@ public class DepositsStAXEventBuilder extends AbstractDepositsBuilder {
         if (bankName != null){
             deposit.setBankName(bankName.getValue());
         }
+
         Attribute accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
         deposit.setAccountId(accountId.getValue());
     }
