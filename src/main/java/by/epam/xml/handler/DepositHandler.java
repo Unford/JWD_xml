@@ -6,14 +6,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.time.LocalDate;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
 import static by.epam.xml.tag.DepositXmlTag.*;
 
 public class DepositHandler extends DefaultHandler {
-    private Set<AbstractDeposit> deposits = new HashSet<>();;
+    private Set<AbstractDeposit> deposits = new HashSet<>();
     private AbstractDeposit currentDeposit;
     private DepositXmlTag currentXmlTag;
 
