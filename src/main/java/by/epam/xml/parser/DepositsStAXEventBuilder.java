@@ -128,7 +128,6 @@ public class DepositsStAXEventBuilder extends AbstractDepositsBuilder {
         if (bankName != null){
             deposit.setBankName(bankName.getValue());
         }
-
         Attribute accountId = startElement.getAttributeByName(QName.valueOf(ACCOUNT_ID.toString()));
         deposit.setAccountId(accountId.getValue());
     }

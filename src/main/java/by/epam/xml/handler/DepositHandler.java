@@ -13,15 +13,9 @@ import java.util.Set;
 import static by.epam.xml.tag.DepositXmlTag.*;
 
 public class DepositHandler extends DefaultHandler {
-    private Set<AbstractDeposit> deposits;
+    private Set<AbstractDeposit> deposits = new HashSet<>();;
     private AbstractDeposit currentDeposit;
     private DepositXmlTag currentXmlTag;
-    private EnumSet<DepositXmlTag> withText;
-
-    public DepositHandler() {
-        deposits = new HashSet<>();
-        withText = EnumSet.range(COUNTRY, TIME_CONSTRAINTS);
-    }
 
     public Set<AbstractDeposit> getDeposits(){
         return deposits;
@@ -44,9 +38,7 @@ public class DepositHandler extends DefaultHandler {
             currentDeposit.setBankName(bankName);
         }else {
             DepositXmlTag temp = DepositXmlTag.parseDepositXmlTag(qName);
-            if (withText.contains(temp)){
-                currentXmlTag = temp;
-            }
+            currentXmlTag = temp;
         }
     }
 
